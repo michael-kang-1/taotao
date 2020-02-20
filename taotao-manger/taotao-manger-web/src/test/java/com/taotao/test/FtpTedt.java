@@ -7,7 +7,7 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.junit.Test;
 
-import com.taotao.common.FtpUtils.FtpUtil;
+import com.taotao.common.utils.FtpUtil;
 
 public class FtpTedt {
 	
