@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.taotao.common.pojo.TaotaoResult;
+import com.taotao.pojo.TbItemParam;
 import com.taotao.service.ItemParamService;
 
 @Controller
@@ -22,5 +23,17 @@ public class ItemParamController {
 		TaotaoResult result = itemParamService.getItemParamByCid(itemCatId);
 		return result;
 	}
+	
+	@RequestMapping("/save/{cid}")
+	@ResponseBody
+	public TaotaoResult insertItemParam(@PathVariable Long cid, String paramData) {
+		//创建pojo对象
+		TbItemParam itemParam = new TbItemParam();
+		itemParam.setItemCatId(cid);
+		itemParam.setParamData(paramData);
+		TaotaoResult result = itemParamService.insertItemParam(itemParam);
+		return result;
+	}
+
 }
 
