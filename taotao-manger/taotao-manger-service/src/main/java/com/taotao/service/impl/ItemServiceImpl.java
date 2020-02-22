@@ -12,8 +12,10 @@ import com.github.pagehelper.PageInfo;
 import com.taotao.common.pojo.EUDataGridResult;
 import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.common.utils.IDUtils;
+import com.taotao.mapper.TbItemDescMapper;
 import com.taotao.mapper.TbItemMapper;
 import com.taotao.pojo.TbItem;
+import com.taotao.pojo.TbItemDesc;
 import com.taotao.pojo.TbItemExample;
 import com.taotao.pojo.TbItemExample.Criteria;
 import com.taotao.service.ItemService;
@@ -28,6 +30,9 @@ public class ItemServiceImpl implements ItemService {
 
 	@Autowired
 	private TbItemMapper itemMapper;
+	
+	@Autowired 
+	private TbItemDescMapper itemDescMapper;
 	
 	@Override
 	public TbItem getItemById(long itemId) {
@@ -70,23 +75,45 @@ public class ItemServiceImpl implements ItemService {
 		return result;
 	}
 /**
+ * @throws Exception 
  * 
  */
-	@Override
-	public TaotaoResult createItem(TbItem item) {
-		//item补全
-		//生成商品ID
-		Long itemId = IDUtils.genItemId();
-		item.setId(itemId);
-		//设置商品的状态 1正常 2 下架 3 删除
-		item.setStatus((byte)1);
-		item.setCreated(new Date());
-		item.setUpdated(new Date());
-		//插入数据库
-		itemMapper.insert(item);
-		
-		return TaotaoResult.ok();
-	}
+@Override
+public TaotaoResult createItem(TbItem item, String desc) throws Exception {
+			//生成商品ID
+			Long itemId = IDUtils.genItemId();
+			item.setId(itemId);
+			//设置商品的状态 1正常 2 下架 3 删除
+			item.setStatus((byte)1);
+			item.setCreated(new Date());
+			item.setUpdated(new Date());
+			//插入数据库
+			itemMapper.insert(item);
+			
+			//添加商品描述信息
+			TaotaoResult result = insertItemDesc(itemId, desc);
+			if (result.getStatus() != 200) {
+				throw new Exception();
+			}
+
+			
+			return TaotaoResult.ok();
+}
+/**
+ * 添加商品描述
+ * <p>Title: insertItemDesc</p>
+ * <p>Description: </p>
+ * @param desc
+ */
+private TaotaoResult insertItemDesc(Long itemId, String desc) {
+	TbItemDesc itemDesc = new TbItemDesc();
+	itemDesc.setItemId(itemId);
+	itemDesc.setItemDesc(desc);
+	itemDesc.setCreated(new Date());
+	itemDesc.setUpdated(new Date());
+	itemDescMapper.insert(itemDesc);
+	return TaotaoResult.ok();
+}
 
 
 }
