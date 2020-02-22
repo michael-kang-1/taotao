@@ -48,26 +48,6 @@ public class ItemParamServiceImpl implements ItemParamService {
 		return TaotaoResult.ok();
 	}
 	
-	/**
-	 * 添加规格参数
-	 * <p>Title: insertItemParamItem</p>
-	 * <p>Description: </p>
-	 * @param itemId
-	 * @param itemParam
-	 * @return
-	 */
-	private TaotaoResult insertItemParamItem(Long itemId, String itemParam) {
-		//创建一个pojo
-		TbItemParamItem itemParamItem = new TbItemParamItem();
-		itemParamItem.setItemId(itemId);
-		itemParamItem.setParamData(itemParam);
-		itemParamItem.setCreated(new Date());
-		itemParamItem.setUpdated(new Date());
-		//向表中插入数据
-		itemParamItemMapper.insert(itemParamItem);
-		
-		return TaotaoResult.ok();
-		
-	}
+
 
 }
