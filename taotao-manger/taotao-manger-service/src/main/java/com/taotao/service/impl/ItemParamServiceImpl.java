@@ -12,7 +12,6 @@ import com.taotao.mapper.TbItemParamMapper;
 import com.taotao.pojo.TbItemParam;
 import com.taotao.pojo.TbItemParamExample;
 import com.taotao.pojo.TbItemParamExample.Criteria;
-import com.taotao.pojo.TbItemParamItem;
 import com.taotao.service.ItemParamService;
 
 @Service
@@ -23,6 +22,7 @@ public class ItemParamServiceImpl implements ItemParamService {
 	
 	@Autowired
 	private TbItemParamItemMapper itemParamItemMapper;
+	
 	
 	@Override
 	public TaotaoResult getItemParamByCid(long cid) {
@@ -48,6 +48,4 @@ public class ItemParamServiceImpl implements ItemParamService {
 		return TaotaoResult.ok();
 	}
 	
-
-
 }
