@@ -20,6 +20,7 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 
 	@Autowired
 	private TbContentCategoryMapper contentCategoryMapper;
+	
 	@Override
 	public List<EUTreeNode> getCategoryList(long parentId) {
 		//根据parentid查询节点列表
@@ -40,6 +41,7 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 		}
 		return resultList;
 	}
+	
 	@Override
 	public TaotaoResult insertContentCategory(long parentId, String name) {
 		
@@ -65,8 +67,36 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 		}
 		//返回结果
 		return TaotaoResult.ok(contentCategory);
+	}	
+	/**
+	 * 作业
+	 */
+
+
+	@Override
+	public TaotaoResult deleteContentCategory(Long parentid, Long id) {
+		//删除
+		contentCategoryMapper.deleteByPrimaryKey(id);
+		//查看父节点的isParent,是不是光棍
+		//根据parentid查询节点列表
+		TbContentCategoryExample example = new TbContentCategoryExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andParentIdEqualTo(parentid);
+		
+		TbContentCategory parentCat = contentCategoryMapper.selectByPrimaryKey(parentid);
+		if(0==contentCategoryMapper.countByExample(example)){
+			parentCat.setIsParent(false);
+		}
+		contentCategoryMapper.updateByPrimaryKey(parentCat);
+		return TaotaoResult.ok();
 	}
-
-
+	
+	@Override
+	public TaotaoResult renameContentCategory(long id, String name) {
+		TbContentCategory idCat = contentCategoryMapper.selectByPrimaryKey(id);
+		idCat.setName(name);
+		contentCategoryMapper.updateByPrimaryKey(idCat);
+		return TaotaoResult.ok();
+	}
 }
 

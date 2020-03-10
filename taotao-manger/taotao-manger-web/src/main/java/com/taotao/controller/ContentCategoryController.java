@@ -32,5 +32,26 @@ public class ContentCategoryController {
 		TaotaoResult result = contentCategoryService.insertContentCategory(parentId, name);
 		return result;
 	}
+	
+	
+	/**
+	 * 作业
+	 * /content/category/delete/
+	 */
+	@RequestMapping("/delete")
+	@ResponseBody
+	public TaotaoResult deleteContentCategory(@RequestParam Long parentId, @RequestParam(value="id", defaultValue="0")Long Id) {
+		TaotaoResult result = contentCategoryService.deleteContentCategory(parentId, Id);
+		return result;
+	}
+	
+	@RequestMapping("/update")
+	@ResponseBody
+	public TaotaoResult renameContentCategory(@RequestParam(value="id", defaultValue="0")Long Id, String name) {
+		TaotaoResult result = contentCategoryService.renameContentCategory(Id, name);
+		return result;
+	}
+	
+	
 
 }
