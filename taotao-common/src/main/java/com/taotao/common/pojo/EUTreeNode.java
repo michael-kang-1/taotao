@@ -6,6 +6,9 @@ package com.taotao.common.pojo;
 public class EUTreeNode {
 	
 	private long id;
+	private String text;
+	private String state;
+
 	public long getId() {
 		return id;
 	}
@@ -24,8 +27,4 @@ public class EUTreeNode {
 	public void setState(String state) {
 		this.state = state;
 	}
-	private String text;
-	private String state;
-	
-
 }
